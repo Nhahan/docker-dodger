@@ -17,10 +17,7 @@ WebFont.load({
         ]
     },
     active: function () {
-        //게임 설정 - 웹 폰트 로딩 후 생성
-        // const width = window.innerWidth || 720;
-        // const height = window.innerHeight || 1080;
-        const width = 720;
+        const width = 1080;
         const height = 1080;
         const config = {
             type: Phaser.AUTO,//WebGL or Canvas

@@ -13,8 +13,8 @@ export default class Loading extends Phaser.Scene {
     }
 
     create() {
-        const [x, y, width, height] = this.cameras.main;
-        this.background = this.add.tileSprite(x, y, width, height, 'background')
+        const {x, y, width, height} = this.cameras.main;
+        this.background = this.add.tileSprite(0, 0, width, height, 'background')
             .setOrigin(0).setScrollFactor(0, 1);
 
         const center = {
@@ -27,7 +27,7 @@ export default class Loading extends Phaser.Scene {
 
         this.title = this.add.text(
             center.x,
-            height * 1 / 5,
+            height / 5,
             'Dodging\nDocker'
         )
             .setFontFamily('Orbitron')
@@ -58,13 +58,18 @@ export default class Loading extends Phaser.Scene {
             ease: 'EaseInOut',
         });
 
-        this.input.once('keydown-ENTER', () => {
-            this.scene.transition({target: 'round', duration: 500});
-        });
+        this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+        // this.input.once('keydown-ENTER', () => {
+        //     this.scene.transition({target: 'round', duration: 500});
+        // });
     }
 
     update() {
+        if (this.enterKey.isDown) {
+            this.scene.transition({target: 'round', duration: 500});
+        }
     }
+
 
     ending(text) {
     }
