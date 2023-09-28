@@ -17,26 +17,28 @@ WebFont.load({
         ]
     },
     active: function () {
-        const width = 1080;
-        const height = 1080;
-        const config = {
-            type: Phaser.AUTO,//WebGL or Canvas
-            width: width,
-            height: height,
-            physics: {
-                default: 'arcade',
-                arcade: {
-                    debug: true,
-                }
-            },
-            scale: {
-                mode: Phaser.Scale.FIT,
-                autoCenter: Phaser.Scale.CENTER_BOTH,
-                width: width,
-                height: height,
-            },
-            scene: [Loading, Round]
-        }
         new Phaser.Game(config);
     }
 });
+
+const width = 720;
+const height = 720;
+export const config = {
+    type: Phaser.WEBGL,
+    width: width,
+    height: height,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            debug: true,
+        }
+    },
+    scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        width: width,
+        height: height,
+    },
+    // scene: [Loading, Round]
+    scene: [Round]
+}
