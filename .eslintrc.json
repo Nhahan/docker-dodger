@@ -10,7 +10,8 @@
     "no-self-compare": 1,
     "import/prefer-default-export": 0,
     "arrow-body-style": 1,
-    "import/no-extraneous-dependencies": ["off", { "devDependencies": false }]
+    "import/no-extraneous-dependencies": ["off", { "devDependencies": false }],
+    "no-case-declarations": "off"
   },
   "ignorePatterns": ["dist", "node_modules", "webpack.*", "config/paths.js"],
   "env": {

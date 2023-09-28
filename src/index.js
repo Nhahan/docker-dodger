@@ -2,7 +2,6 @@ import '@/styles/index.css';
 
 import Phaser from 'phaser';
 
-import Loading from '@/js/Loading';
 import Round from '@/js/Round';
 
 import WebFont from 'webfontloader';
