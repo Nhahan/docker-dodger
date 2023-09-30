@@ -23,3 +23,8 @@ Dodge the incoming missiles.
 Docker becomes invulnerable for a moment.
 
 #### Keep your Docker alive for as long as possible and score high.
+
+
+### License
+
+This project is available under the [MIT License].
