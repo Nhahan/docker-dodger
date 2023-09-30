@@ -27,4 +27,4 @@ Docker becomes invulnerable for a moment.
 
 ### License
 
-This project is available under the [MIT License].
+This project is available under the [MIT License](https://github.com/Nhahan/docker-dodger/blob/main/LICENSE).
