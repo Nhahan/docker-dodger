@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 
 import background from '@/images/background.jpeg';
+import logo from '@/images/logo.png';
 
 export default class Loading extends Phaser.Scene {
 
@@ -9,6 +10,7 @@ export default class Loading extends Phaser.Scene {
     }
 
     preload() {
+        this.load.image('logo', logo);
         this.load.image('background', background);
     }
 
@@ -21,6 +23,9 @@ export default class Loading extends Phaser.Scene {
             x: x + width / 2,
             y: y + height / 2
         };
+        const mainLogo = this.logo = this.add.image(center.x, center.y, 'logo')
+            .setOrigin();
+        mainLogo.scale = 0.5;
 
         const titleFontSize = Math.max(50, 120 * width / 1920);
         const clickToStartFontSize = Math.max(35, 75 * width / 1920);
@@ -28,11 +33,11 @@ export default class Loading extends Phaser.Scene {
         this.title = this.add.text(
             center.x,
             height / 5,
-            'Dodging\nDocker'
+            'Dodging Docker'
         )
             .setFontFamily('Orbitron')
             .setFill("#fff")
-            .setFontSize(titleFontSize)
+            .setFontSize(titleFontSize*1.25)
             .setOrigin(0.5)
             .setDepth(999)
             .setAlign('center');
@@ -40,7 +45,7 @@ export default class Loading extends Phaser.Scene {
         this.clickToStart = this.add.text(
             center.x,
             height * 4 / 5,
-            'Press enter to start'
+            'Press any key to start'
         )
             .setFill("#fff")
             .setFontFamily('Orbitron')
@@ -58,34 +63,9 @@ export default class Loading extends Phaser.Scene {
             ease: 'EaseInOut',
         });
 
-        this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
-        // this.input.once('keydown-ENTER', () => {
-        //     this.scene.transition({target: 'round', duration: 500});
-        // });
-    }
-
-    update() {
-        if (this.enterKey.isDown) {
-            this.scene.transition({target: 'round', duration: 500});
-        }
-    }
-
-
-    ending(text) {
-    }
-
-    //게임오버
-    gameOver() {
-    }
-
-    //게임클리어
-    gameClear() {
-    }
-
-    destroyUnit(target) {
-    }
-
-    addScore(value) {
+        this.input.on('pointerdown', () => {
+            this.scene.transition({ target: 'round', duration: 500 });
+        });
     }
 
 }
