@@ -45,8 +45,11 @@ export default class Round extends Phaser.Scene {
             .setAlpha(0)
             .setDepth(999)
             .setAlign('center');
+        this.input.keyboard.on('keydown', () => {
+            if (!this.restart) return;
+            this.scene.restart();
+        });
         this.input.on('pointerdown', () => {
-            console.log('??')
             if (!this.restart) return;
             this.scene.restart();
         });

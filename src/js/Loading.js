@@ -37,7 +37,7 @@ export default class Loading extends Phaser.Scene {
         )
             .setFontFamily('Orbitron')
             .setFill("#fff")
-            .setFontSize(titleFontSize*1.25)
+            .setFontSize(titleFontSize * 1.25)
             .setOrigin(0.5)
             .setDepth(999)
             .setAlign('center');
@@ -63,8 +63,11 @@ export default class Loading extends Phaser.Scene {
             ease: 'EaseInOut',
         });
 
-        this.input.on('pointerdown', () => {
-            this.scene.transition({ target: 'round', duration: 500 });
+        this.input.keyboard.once('keydown', () => {
+            this.scene.transition({target: 'round', duration: 500});
+        });
+        this.input.once('pointerdown', () => {
+            this.scene.transition({target: 'round', duration: 500});
         });
     }
 
