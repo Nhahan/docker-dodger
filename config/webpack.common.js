@@ -38,9 +38,9 @@ module.exports = {
     // Generates deprecation warning: https://github.com/jantimon/html-webpack-plugin/issues/1501
     new HtmlWebpackPlugin({
       title: 'Docker Dodger',
-      favicon: paths.src + '/images/player.png',
-      template: paths.src + '/template.html', // template file
-      filename: 'index.html', // output file
+      favicon: paths.src + '/images/favicon.jpeg',
+      template: paths.src + '/template.html',
+      filename: 'index.html',
     }),
   ],
 
