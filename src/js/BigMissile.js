@@ -33,7 +33,7 @@ export default class BigMissile extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.collider(this, target, this.handleCollision, null, this);
         setTimeout(() => {
             this.destroy();
-        }, 12000);
+        }, 14000);
     }
 
     move() {

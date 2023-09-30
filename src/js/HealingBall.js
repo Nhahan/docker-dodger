@@ -33,7 +33,7 @@ export default class HealingBall extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.collider(this, target, this.handleCollision, null, this);
         setTimeout(() => {
             this.destroy();
-        }, 13000);
+        }, 15000);
     }
 
     move() {
