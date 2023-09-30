@@ -72,7 +72,9 @@ export default class Round extends Phaser.Scene {
 
         this.enimies = [new Enemy(this, this.player, '2', 2)];
         const enemy = new Enemy(this, this.player, '1', 1);
+        const enemy2 = new Enemy(this, this.player, '1', 2);
         this.enimies.push(enemy);
+        this.enimies.push(enemy2);
 
         this.timers = 0;
 
