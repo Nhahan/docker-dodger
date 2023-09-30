@@ -1,5 +1,7 @@
 # Docker Dodger
 
+### [Click here to play Docker Dodger](https://nhahan.github.io/)
+
 ![_8a4f5fc8-557b-4030-abe6-8e54d129f430](https://github.com/Nhahan/docker-dodger/assets/81916648/29f06a3f-6f0d-497e-b822-f860655864d2)
 
 ## Description
