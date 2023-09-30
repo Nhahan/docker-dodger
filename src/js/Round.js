@@ -32,6 +32,37 @@ export default class Round extends Phaser.Scene {
         };
 
         this.gameOver = false;
+        this.restart = false;
+        this.clickToRestart = this.add.text(
+            center.x,
+            height * 4 / 5,
+            'Press any key to restart'
+        )
+            .setFill("#fff")
+            .setFontFamily('Orbitron')
+            .setFontSize(24)
+            .setOrigin(0.5)
+            .setAlpha(0)
+            .setDepth(999)
+            .setAlign('center');
+        this.input.on('pointerdown', () => {
+            console.log('??')
+            if (!this.restart) return;
+            this.scene.restart();
+        });
+
+        this.score = 0;
+        this.scoreShow = this.add.text(
+            this.cameras.main.width / 18,
+            this.cameras.main.height / 18,
+            this.score,
+            {
+                fontFamily: 'Orbitron',
+                fontSize: '24px',
+                color: '#ffffff',
+            }
+        ).setOrigin(0, 0.5).setDepth(1000);
+
         this.player = new Player(this, center.x, height / 2);
         this.startTime = Date.now();
         this.timers = 0;
@@ -49,7 +80,7 @@ export default class Round extends Phaser.Scene {
          */
         this.youDiedText = this.add.text(
             this.cameras.main.width / 2,
-            this.cameras.main.height / 2,
+            this.cameras.main.height / 5 * 2,
             'You Died',
             {
                 fontFamily: 'Orbitron',
@@ -60,7 +91,7 @@ export default class Round extends Phaser.Scene {
 
         this.youDiedText2 = this.add.text(
             this.cameras.main.width / 2,
-            this.cameras.main.height / 2,
+            this.cameras.main.height / 5 * 2,
             'You Died',
             {
                 fontFamily: 'Orbitron',
@@ -68,6 +99,17 @@ export default class Round extends Phaser.Scene {
                 color: '#4f0111',
             }
         ).setOrigin(0.5).setDepth(999).setAlpha(0);
+
+        this.scoreResult = this.add.text(
+            this.cameras.main.width / 2,
+            this.cameras.main.height / 5 * 3,
+            this.score,
+            {
+                fontFamily: 'Orbitron',
+                fontSize: '36px',
+                color: '#ffffff',
+            }
+        ).setOrigin(0.5).setDepth(990).setAlpha(0);
 
         this.add.image(0, 0, 'background').setOrigin(0);
 
@@ -81,45 +123,76 @@ export default class Round extends Phaser.Scene {
     }
 
     update() {
-        if (this.enimies.length > 12) return;
+        if (this.enimies.length > 13) return;
         this.timers += Date.now() - this.startTime;
-        if (this.timers > 3500000 + this.enimies.length * 5000000) {
+        if (this.timers > 100000 + this.enimies.length * 5000000) {
             this.timers = 0;
             this.enimies.push(new Enemy(this, this.player, Math.random() < 0.5 ? '1' : '2', this.enimies.length));
         }
+
+        this.scoreShow.setText(this.score);
+
     }
 
     getGameOver() {
         return this.gameOver;
     }
 
+    addScore(point) {
+        this.score += point;
+    }
+
     setGameOver(b) {
         this.gameOver = b;
         if (this.gameOver) {
             this.tweens.add({
-                targets: this.youDiedText,
-                alpha: 1, // 최종적으로 텍스트가 완전히 불투명해집니다.
-                duration: 3000, // 애니메이션 지속 시간 (2초)
+                targets: this.scoreShow,
+                alpha: 0,
+                duration: 500,
                 ease: 'Linear',
-                onComplete: () => {
-                    // 애니메이션이 끝나면 추가 작업 수행
-                    // 예를 들어 게임 재시작 버튼 표시 등을 할 수 있습니다.
-                },
+            });
+            this.scoreResult.setText(this.score);
+            this.tweens.add({
+                targets: this.scoreResult,
+                alpha: 1,
+                duration: 6000,
+                ease: 'Linear',
+            });
+            this.tweens.add({
+                targets: this.youDiedText,
+                alpha: 1,
+                duration: 3000,
+                ease: 'Linear',
             });
             this.tweens.add({
                 targets: this.overlay,
-                alpha: 0.7, // 최종적으로 투명도가 0.7이 됩니다. (0에서 1 사이)
+                alpha: 0.7,
                 duration: 2000, // 애니메이션 지속 시간 (2초)
                 ease: 'Linear',
                 onComplete: () => {
+                    this.restart = true;
                     this.tweens.add({
-                        targets: this.youDiedText2,
-                        alpha: 1, // 최종적으로 텍스트가 완전히 불투명해집니다.
-                        duration: 2000, // 애니메이션 지속 시간 (2초)
+                        targets: this.clickToRestart,
+                        alpha: 1,
+                        duration: 1000,
                         ease: 'Linear',
                         onComplete: () => {
+                            this.tweens.add({
+                                targets: this.clickToRestart,
+                                alpha: 0,
+                                duration: 1000,
+                                repeat: -1,
+                                yoyo: true,
+                                ease: 'EaseInOut',
+                            });
+                        }
+                    });
 
-                        },
+                    this.tweens.add({
+                        targets: this.youDiedText2,
+                        alpha: 1,
+                        duration: 2000,
+                        ease: 'Linear',
                     });
                 },
             });
