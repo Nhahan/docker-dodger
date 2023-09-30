@@ -77,5 +77,12 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         } else {
             new Missile(this.scene, this.x, this.y, 1, 100, this.target, this.count + 1);
         }
+        this.addRandomScore();
+    }
+
+    addRandomScore() {
+        if (Math.random() < 0.025 - this.count * 0.001) {
+            this.scene.addScore(this.count)
+        }
     }
 }
