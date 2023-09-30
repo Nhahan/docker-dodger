@@ -35,10 +35,28 @@ export default class Player extends Phaser.Physics.Arcade.Image {
         if (this.scene.getGameOver()) return;
         this.invincibleTime -= (Date.now() - this.startTime);
 
-        if (this.key.up.isDown) this.y -= this.speed;
-        if (this.key.down.isDown) this.y += this.speed;
-        if (this.key.left.isDown) this.x -= this.speed;
-        if (this.key.right.isDown) this.x += this.speed;
+        const pointer = this.scene.input.activePointer;
+        if (pointer.isDown) { // 마우스
+            const distance = Phaser.Math.Distance.Between(
+                pointer.x, pointer.y,
+                this.x, this.y,
+            );
+            // 떨림 보정
+            if (distance > this.speed) {
+                const angle = Phaser.Math.Angle.Between(
+                    pointer.x, pointer.y, this.x, this.y
+                );
+                const dx = Math.cos(angle) * this.speed;
+                const dy = Math.sin(angle) * this.speed;
+                this.x -= dx;
+                this.y -= dy;
+            }
+        } else {// 키보드
+            if (this.key.up.isDown) this.y -= this.speed;
+            if (this.key.down.isDown) this.y += this.speed;
+            if (this.key.left.isDown) this.x -= this.speed;
+            if (this.key.right.isDown) this.x += this.speed;
+        }
 
         // 무적 상태이면 깜빡깜빡
         if (this.invincibleTime < 0) {
@@ -60,8 +78,11 @@ export default class Player extends Phaser.Physics.Arcade.Image {
     }
 
     damaged() {
-        if (this.invincibleTime > -5000 || this.scene.getGameOver()) return; //무적일 경우 대미지를 입지 않음
-        // eslint-disable-next-line no-import-assign
+        if (this.invincibleTime > -5000 || this.scene.getGameOver()) {
+            this.scene.addScore(Math.floor(Math.random() * (200 - 100 + 1)) + 100);
+            return;
+        } //무적일 경우 대미지를 입지 않음
+
         this.scene.setGameOver(true);
 
         this.scene.tweens.add({
@@ -74,6 +95,7 @@ export default class Player extends Phaser.Physics.Arcade.Image {
 
     dodged() {
         if (this.scene.getGameOver()) return;
+        this.scene.addScore(Math.floor(Math.random() * (200 - 100 + 1)) + 100);
         this.startTime = Date.now();
         this.invincibleTime = 500000;
     }
