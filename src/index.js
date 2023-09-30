@@ -5,6 +5,7 @@ import Phaser from 'phaser';
 import Round from '@/js/Round';
 
 import WebFont from 'webfontloader';
+import Loading from "@/js/Loading";
 
 WebFont.load({
     custom: {
@@ -29,7 +30,7 @@ export const config = {
     physics: {
         default: 'arcade',
         arcade: {
-            debug: true,
+            debug: false,
         }
     },
     scale: {
@@ -38,6 +39,6 @@ export const config = {
         width: width,
         height: height,
     },
-    // scene: [Loading, Round]
-    scene: [Round]
+    scene: [Loading, Round]
+    // scene: [Round]
 }
