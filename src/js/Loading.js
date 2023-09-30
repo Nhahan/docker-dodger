@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 
 import background from '@/images/background.jpeg';
 import logo from '@/images/logo.png';
+import description from '@/images/description.png'
 
 export default class Loading extends Phaser.Scene {
 
@@ -12,6 +13,7 @@ export default class Loading extends Phaser.Scene {
     preload() {
         this.load.image('logo', logo);
         this.load.image('background', background);
+        this.load.image('description', description);
     }
 
     create() {
@@ -23,17 +25,19 @@ export default class Loading extends Phaser.Scene {
             x: x + width / 2,
             y: y + height / 2
         };
-        const mainLogo = this.logo = this.add.image(center.x, center.y, 'logo')
-            .setOrigin();
+        const mainLogo = this.add.image(center.x, center.y -70, 'logo').setOrigin();
         mainLogo.scale = 0.5;
+
+        const mainDescription = this.add.image(center.x, center.y + 125, 'description').setOrigin()
+        mainDescription.scale = 0.65;
 
         const titleFontSize = Math.max(50, 120 * width / 1920);
         const clickToStartFontSize = Math.max(35, 75 * width / 1920);
 
         this.title = this.add.text(
             center.x,
-            height / 5,
-            'Dodging Docker'
+            height / 6,
+            'Docker Dodger'
         )
             .setFontFamily('Orbitron')
             .setFill("#fff")
@@ -44,7 +48,7 @@ export default class Loading extends Phaser.Scene {
 
         this.clickToStart = this.add.text(
             center.x,
-            height * 4 / 5,
+            height * 5 / 6,
             'Press any key to start'
         )
             .setFill("#fff")
