@@ -12,7 +12,7 @@ export default class BigMissile extends Phaser.Physics.Arcade.Sprite {
         this.setDepth(1);
         this.setTexture('glow1');
         this.setPosition(x, y);
-        this.setScale(getRandomNumberBetween0_3And1());
+        this.setScale(getRandomNumber());
 
 
         this.group = scene.physics.add.group({
@@ -63,6 +63,6 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function getRandomNumberBetween0_3And1() {
-    return 0.35 + Math.random() * 1.4;
+function getRandomNumber() {
+    return 0.35 + Math.random() * 1.5;
 }
