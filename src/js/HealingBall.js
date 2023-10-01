@@ -39,14 +39,11 @@ export default class HealingBall extends Phaser.Physics.Arcade.Sprite {
     move() {
         const angleToTarget = Phaser.Math.Angle.Between(this.x, this.y, this.target.x, this.target.y);
 
-        // 각도를 +- 60도로 조절
-        const minAngle = angleToTarget - Phaser.Math.DegToRad(75); // 최소 각도
+        const minAngle = angleToTarget - Phaser.Math.DegToRad(0); // 최소 각도
         const maxAngle = angleToTarget + Phaser.Math.DegToRad(75); // 최대 각도
 
-        // 조절된 각도를 랜덤하게 선택
         const adjustedAngle = Phaser.Math.FloatBetween(minAngle, maxAngle);
 
-        // 선택된 각도로 이동
         const dx = Math.cos(adjustedAngle) * this.speed + getRandomInt(0, 250);
         const dy = Math.sin(adjustedAngle) * this.speed + getRandomInt(0, 250);
 
