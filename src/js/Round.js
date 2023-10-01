@@ -158,7 +158,7 @@ export default class Round extends Phaser.Scene {
     }
 
     playDodgeEffect(x, y) {
-        const dodgeEffect = this.add.sprite(x, y, 'dodgeEffect').setScale(1).setAlpha(0.6).setDepth(1);
+        const dodgeEffect = this.add.sprite(x, y, 'dodgeEffect').setScale(1).setAlpha(0.75).setDepth(1000);
         dodgeEffect.anims.create({
             key: 'playDodgeEffect', frames: 'dodgeEffect', frameRate: 60,
         });
@@ -182,9 +182,9 @@ export default class Round extends Phaser.Scene {
     }
 
     playFeverEffect(x, y) {
-        const feverEffect = this.add.sprite(x, y, 'feverEffect').setScale(1).setAlpha(1).setDepth(1000);
+        const feverEffect = this.add.sprite(x, y, 'feverEffect').setScale(1).setAlpha(0.8).setDepth(1000);
         feverEffect.anims.create({
-            key: 'playFeverEffect', frames: 'feverEffect', frameRate: 30,
+            key: 'playFeverEffect', frames: 'feverEffect', frameRate: 24,
         });
         feverEffect.on('animationcomplete', () => {
             feverEffect.destroy();
