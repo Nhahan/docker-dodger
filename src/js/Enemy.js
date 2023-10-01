@@ -81,7 +81,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     addRandomScore() {
-        if (Math.random() < 0.025 - this.count * 0.001) {
+        if (Math.random() < 0.1) {
             this.scene.addScore(this.count)
         }
     }
