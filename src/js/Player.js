@@ -81,7 +81,7 @@ export default class Player extends Phaser.Physics.Arcade.Image {
 
     damaged() {
         // 무적 상태
-        if (this.invincibleTime > -10000 || this.scene.getGameOver()) {
+        if (this.invincibleTime > -50000 || this.scene.getGameOver()) {
             this.scene.playImpactEffect(this.x, this.y);
             this.scene.addScore(Math.floor(Math.random() * (200 - 100 + 1)) + 100);
             return;
@@ -102,17 +102,25 @@ export default class Player extends Phaser.Physics.Arcade.Image {
         if (this.scene.getGameOver()) return;
 
         this.dodgedStack++;
+        // fever
         if (this.dodgedStack >= 3) {
             this.scene.playFeverEffect(this.x, this.y);
             this.setScale(3);
             this.dodgedStack = 0;
 
             this.invincibleTime = 1000000;
+            this.scene.addScore(Math.floor(Math.random() * (200 - 100 + 1)) + 100);
+            this.startTime = Date.now();
+            return;
+        }
+
+        // normal
+        this.scene.playDodgeEffect(this.x, this.y);
+
+        if (this.invincibleTime > 0) {
+            this.invincibleTime += 600000;
         } else {
-            this.scene.playDodgeEffect(this.x, this.y);
-
-
-            this.invincibleTime = 60000;
+            this.invincibleTime = 600000;
         }
         this.scene.addScore(Math.floor(Math.random() * (200 - 100 + 1)) + 100);
         this.startTime = Date.now();
