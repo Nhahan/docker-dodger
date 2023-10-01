@@ -12,6 +12,7 @@ export default class Player extends Phaser.Physics.Arcade.Image {
         this.startTime = Date.now();
 
         this.speed = 4;
+        this.dodgedStack = 0;
 
         this.invincibleTime = 750000;
         this.flash = true;
@@ -51,7 +52,7 @@ export default class Player extends Phaser.Physics.Arcade.Image {
                 this.x -= dx;
                 this.y -= dy;
             }
-        } else {// 키보드
+        } else { // 키보드
             if (this.key.up.isDown) this.y -= this.speed;
             if (this.key.down.isDown) this.y += this.speed;
             if (this.key.left.isDown) this.x -= this.speed;
@@ -61,6 +62,7 @@ export default class Player extends Phaser.Physics.Arcade.Image {
         // 무적 상태이면 깜빡깜빡
         if (this.invincibleTime < 0) {
             this.setTint(0xffffff);
+            this.setScale(1);
             this.speed = 4;
             return;
         }
@@ -78,11 +80,13 @@ export default class Player extends Phaser.Physics.Arcade.Image {
     }
 
     damaged() {
-        if (this.invincibleTime > -5000 || this.scene.getGameOver()) {
+        if (this.invincibleTime > -10000 || this.scene.getGameOver()) {
+            this.scene.playImpactEffect(this.x, this.y);
             this.scene.addScore(Math.floor(Math.random() * (200 - 100 + 1)) + 100);
             return;
         } //무적일 경우 대미지를 입지 않음
 
+        this.scene.playExplosionEffect(this.x, this.y);
         this.scene.setGameOver(true);
 
         this.scene.tweens.add({
@@ -95,8 +99,18 @@ export default class Player extends Phaser.Physics.Arcade.Image {
 
     dodged() {
         if (this.scene.getGameOver()) return;
+
+        this.dodgedStack++;
+        if (this.dodgedStack >= 3) {
+            this.scene.playFeverEffect(this.x, this.y);
+            this.setScale(2.5);
+            this.dodgedStack = 0;
+        } else {
+            this.scene.playDodgeEffect(this.x, this.y);
+        }
+
         this.scene.addScore(Math.floor(Math.random() * (200 - 100 + 1)) + 100);
         this.startTime = Date.now();
-        this.invincibleTime = 500000;
+        this.invincibleTime = 550000;
     }
 }
