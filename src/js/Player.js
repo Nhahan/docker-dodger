@@ -108,7 +108,7 @@ export default class Player extends Phaser.Physics.Arcade.Image {
             this.setScale(3);
             this.dodgedStack = 0;
 
-            this.invincibleTime = 1000000;
+            this.invincibleTime = 900000;
             this.scene.addScore(Math.floor(Math.random() * (200 - 100 + 1)) + 100);
             this.startTime = Date.now();
             return;
